@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . "/../config/jwt.php";
 
+// Skip auth for OPTIONS requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    return;
+}
+
 $headers = getallheaders();
 if (!isset($headers['Authorization'])) {
     http_response_code(401);

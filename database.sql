@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS leads (
 
 -- Insert Sample User (password: user123)
 INSERT INTO users (email, password, name) VALUES
-('user@example.com', '$2y$10$KOT0f44V57QpwAHJGW.vEuK0oKd5N5sSvNYCqGx8P/Y5K5K5K5K5K', 'Test User');
+('user@example.com', '$2y$10$gSvqqUNVlXP2tfVFaWK1Be1DQGspBTEDVRIqlJrgifvJmZlH9EZIS', 'Test User');
 
 -- Insert Sample Leads
 INSERT INTO leads (name, email, phone) VALUES

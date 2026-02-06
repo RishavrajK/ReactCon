@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Dashboard.css";
 
 function Dashboard() {
   const [leads, setLeads] = useState([]);
@@ -11,7 +12,7 @@ function Dashboard() {
     const fetchLeads = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost/backend/api/leads/getLeads.php", {
+        const res = await fetch("http://localhost/ReactCon/Backend/api/leads/getLeads.php", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -40,37 +41,56 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <div className="header-title">
+          <h1>Dashboard</h1>
+          <p>Manage your leads efficiently</p>
+        </div>
+        <button className="btn-logout" onClick={handleLogout}>Logout</button>
+      </div>
 
-      {loading && <p>Loading leads...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className="dashboard-content">
+        {loading && (
+          <div className="loading">
+            <div className="spinner"></div>
+            <p>Loading leads...</p>
+          </div>
+        )}
 
-      {leads.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leads.map(lead => (
-              <tr key={lead.id}>
-                <td>{lead.id}</td>
-                <td>{lead.name}</td>
-                <td>{lead.email}</td>
-                <td>{lead.phone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        !loading && <p>No leads found</p>
-      )}
+        {error && <div className="error-banner">{error}</div>}
+
+        {leads.length > 0 ? (
+          <div className="table-container">
+            <table className="leads-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leads.map(lead => (
+                  <tr key={lead.id}>
+                    <td>{lead.id}</td>
+                    <td>{lead.name}</td>
+                    <td>{lead.email}</td>
+                    <td>{lead.phone}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          !loading && (
+            <div className="empty-state">
+              <p>No leads found</p>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }
